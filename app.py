@@ -11,7 +11,7 @@ from util import (
 from logger import setup_logger
 
 # Set up logger
-logger = setup_logger('app_logger', 'logs/app.log')
+logger = setup_logger('app_logger', 'app.log')
 
 load_dotenv()
 st.set_page_config(page_title="Personal AI Assistant", page_icon="🤖", layout="centered")
