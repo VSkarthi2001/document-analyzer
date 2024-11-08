@@ -60,6 +60,7 @@ for message in st.session_state.chat_history:
         st.markdown(text)
 
 if prompt := st.chat_input("Dive deep into your files. Upload to explore."):
+    print(prompt)
     st.session_state.chat_history.append(("user", prompt))
     with st.chat_message("user"):
         st.markdown(prompt)
