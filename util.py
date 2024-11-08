@@ -11,7 +11,7 @@ from logger import setup_logger
 logger = setup_logger('util_logger', 'util.log')
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-logger.info("GOOGLE_API_KEY loaded.")
+print("GOOGLE_API_KEY loaded.")
 gen_ai.configure(api_key=GOOGLE_API_KEY)
 
 system_prompt = """
@@ -41,30 +41,30 @@ model = gen_ai.GenerativeModel(model_name="gemini-1.5-flash", system_instruction
 
 # Load Sentence-BERT model
 embedding_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-logger.info("Sentence-BERT model loaded.")
+print("Sentence-BERT model loaded.")
 
 def extract_text_from_pdf(file):
     doc = fitz.open(stream=file.read(), filetype="pdf")
     text = ""
     for page in doc:
         text += page.get_text()
-    logger.info(f"Extracted text from PDF, number of pages: {len(doc)}")
+    print(f"Extracted text from PDF, number of pages: {len(doc)}")
     return text
 
 def extract_text_from_docx(file):
     doc = docx.Document(file)
     text = "\n".join([para.text for para in doc.paragraphs])
-    logger.info("Extracted text from DOCX.")
+    print("Extracted text from DOCX.")
     return text
 
 def extract_text_from_csv(file):
     df = pd.read_csv(file)
-    logger.info(f"Extracted text from CSV, number of rows: {len(df)}")
+    print(f"Extracted text from CSV, number of rows: {len(df)}")
     return df.to_string()
 
 def extract_text_from_excel(file):
     df = pd.read_excel(file)
-    logger.info(f"Extracted text from Excel, number of rows: {len(df)}")
+    print(f"Extracted text from Excel, number of rows: {len(df)}")
     return df.to_string()
 
 def get_conversation_history(chat_history):
@@ -74,11 +74,11 @@ def get_conversation_history(chat_history):
             history += f"User: {text}\n"
         else:
             history += f"Assistant: {text}\n"
-    logger.info("Retrieved conversation history.")
+    print("Retrieved conversation history.")
     return history
 
 def generate_ai_response(input_with_memory):
-    logger.info("Generating AI response.")
+    print("Generating AI response.")
     response = model.generate_content(input_with_memory)
     if response.candidates and len(response.candidates) > 0:
         generated_content = response.candidates[0].content.parts[0].text
@@ -90,7 +90,7 @@ def generate_ai_response(input_with_memory):
 
         # Strip out any "Assistant:" labels from the generated content
         full_response = full_response.replace('Assistant:', '').strip()
-        logger.info("AI response generated successfully.")
+        print("AI response generated successfully.")
         return full_response
-    logger.error("Failed to generate AI response.")
+    print("Failed to generate AI response.")
     return None
