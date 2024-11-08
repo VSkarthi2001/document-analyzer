@@ -8,7 +8,7 @@ from time import sleep
 from logger import setup_logger
 
 # Set up logger
-logger = setup_logger('util_logger', 'logs/util.log')
+logger = setup_logger('util_logger', 'util.log')
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 logger.info("GOOGLE_API_KEY loaded.")
